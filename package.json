@@ -1,0 +1,33 @@
+{
+  "name": "vakadar",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Вакадар — умный радар IT-вакансий (агрегатор с ИИ-фильтром)",
+  "scripts": {
+    "dev": "next dev -p 3000",
+    "build": "next build",
+    "start": "next start -p 3000",
+    "ingest": "node scripts/ingest-hh.mjs && node scripts/ingest-telegram.mjs",
+    "ingest:hh": "node scripts/ingest-hh.mjs",
+    "ingest:telegram": "node scripts/ingest-telegram.mjs",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:studio": "prisma studio"
+  },
+  "dependencies": {
+    "next": "^14.2.35",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "@prisma/client": "^5.18.0",
+    "next-auth": "^4.24.7",
+    "bcryptjs": "^2.4.3",
+    "zod": "^3.23.8",
+    "cheerio": "^1.0.0",
+    "recharts": "^2.12.7"
+  },
+  "devDependencies": {
+    "prisma": "^5.18.0",
+    "tailwindcss": "^3.4.9",
+    "postcss": "^8.4.41",
+    "autoprefixer": "^10.4.20"
+  }
+}
