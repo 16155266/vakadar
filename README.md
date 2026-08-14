@@ -10,13 +10,23 @@ Next.js 14 (App Router) + Prisma/SQLite + NextAuth (Credentials) + Tailwind CSS.
 
 ## Быстрый старт
 
+БД — Postgres (нужен для деплоя на Vercel: там файловая система эфемерна, SQLite не переживёт перезапуск). Локально проще всего использовать бесплатный облачный Postgres (например [Neon](https://neon.tech)) — один и тот же `DATABASE_URL` подходит и для разработки, и для продакшена.
+
 ```bash
 npm install
-cp .env.example .env        # заполните NEXTAUTH_SECRET (openssl rand -base64 32)
+cp .env.example .env        # DATABASE_URL с Neon/Vercel Postgres, NEXTAUTH_SECRET (openssl rand -base64 32), SITE_PASSWORD
 npx prisma migrate dev --name init
 npm run ingest:hh            # тянет реальные вакансии из HH API (без токена)
 npm run dev                  # http://localhost:3000
 ```
+
+## Деплой на Vercel (push → авто-обновление сайта)
+
+1. Зарегистрируйтесь на [neon.tech](https://neon.tech) (бесплатно), создайте проект, скопируйте connection string.
+2. На [vercel.com](https://vercel.com) → Add New → Project → импортируйте GitHub-репозиторий `vakadar`.
+3. В Environment Variables укажите: `DATABASE_URL` (из Neon), `NEXTAUTH_SECRET`, `SITE_PASSWORD`, при желании `ANT_ACCESS_TOKEN`.
+4. Deploy. После первого деплоя разово примените миграции к продовой БД: `npx prisma migrate deploy` с тем же `DATABASE_URL` (можно локально, указав его временно в `.env`).
+5. Дальше просто `git push` в `main` — Vercel пересобирает и обновляет сайт автоматически.
 
 ### Наполнение вакансиями из Telegram (опционально)
 
